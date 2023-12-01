@@ -6,12 +6,9 @@ pragma solidity ^0.8.9;
 contract Assessment {
     address payable public owner;
     uint256 public balance;
-    uint256 public amount = 1;
 
     event Deposit(uint256 amount);
     event Withdraw(uint256 amount);
-    event Mint(address indexed recipient, uint256 amount);
-    event Burn(address indexed recipient, uint256 amount);
 
     constructor(uint initBalance) payable {
         owner = payable(msg.sender);
@@ -60,26 +57,4 @@ contract Assessment {
         // emit the event
         emit Withdraw(_withdrawAmount);
     }
-
-    function mint() public {
-        require(msg.sender == owner, "You are not the owner of this account");
-
-        // mint 1 ETH
-        balance += amount;
-
-        // emit the event
-        emit Mint(msg.sender, 1 ether);
-    }
-
-    function burn() public {
-        require(msg.sender == owner, "You are not the owner of this account");
-        require(balance >= amount, "Insufficient funds to burn");
-
-        // burn 1 ETH
-        balance -= amount;
-
-        // emit the event
-        emit Withdraw(amount);
-    }
-
 }
